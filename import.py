@@ -9,9 +9,10 @@ import MySQLdb
 import pymongo
 
 parser = argparse.ArgumentParser()
-parser.add_argument("sql_dbname")
-parser.add_argument("tableprefix")
-parser.add_argument("mongo_dbname")
+parser.add_argument("baseurl", help="Base URL of WP install, e.g. https://www.angrymetalguy.com (no trailing slash")
+parser.add_argument("sql_dbname", help="Name of WP SQL database")
+parser.add_argument("tableprefix", help="WP table name prefix (no trailing underscore)")
+parser.add_argument("mongo_dbname", help="Name of Mongo DB")
 args = parser.parse_args()
 
 sql = MySQLdb.connect(db=args.sql_dbname)
@@ -92,7 +93,7 @@ for i in cur:
             continue
         posts[comment_post_ID] = {
                 "id": comment_post_ID,
-                "url": "https://www.angrymetalguy.com/{}/".format(post_name),
+                "url": "{}/{}/".format(args.baseurl, post_name),
                 "title": post_title,
                 "scraped": None,
                 "metadata": {"source": "wpimport"},
