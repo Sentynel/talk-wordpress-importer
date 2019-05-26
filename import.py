@@ -15,7 +15,7 @@ parser.add_argument("tableprefix", help="WP table name prefix (no trailing under
 parser.add_argument("mongo_dbname", help="Name of Mongo DB")
 args = parser.parse_args()
 
-sql = MySQLdb.connect(db=args.sql_dbname)
+sql = MySQLdb.connect(db=args.sql_dbname, charset="utf8")
 cur = sql.cursor()
 
 posts = {}
